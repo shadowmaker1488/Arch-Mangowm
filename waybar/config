@@ -67,6 +67,7 @@
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ", 
         "format-linked": "{ifname} (No IP) ",
+	      "on-click": "kitty -e nmtui",
         "format-disconnected": "Odpojeno ⚠",
     },
     "pulseaudio": {
@@ -86,6 +87,7 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "kitty -e pulsemixer"
+        "on-click": "kitty -e pulsemixer",
+        "on-click-right": "kitty -e bluetui"
     },
 }
