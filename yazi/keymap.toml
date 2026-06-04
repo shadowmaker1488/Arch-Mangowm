@@ -83,7 +83,6 @@ keymap = [
 	{ on = [ "<C-s>" ],     run = "search none",                desc = "Cancel the ongoing search" },
 	{ on = [ "z" ],         run = "plugin zoxide",              desc = "Jump to a directory using zoxide" },
 	{ on = [ "Z" ],         run = "plugin fzf",                 desc = "Jump to a directory, or reveal a file using fzf" },
-	{ on = [ "<C-n>" ], run = ''' shell 'dragon-drop -x -i -T "$1"' --confirm ''',	desc = "Drag & Drop" },
 	{ on = [ "<C-m>" ],         run = "plugin mount",                 desc = "Mount devices" },
 
 	# Copy
@@ -137,7 +136,7 @@ keymap = [
 
 	# Goto
 	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go home directory" },
-	{ on = [ "g", "u" ],       run = "cd /run/media/tom/",             desc = "Go removable media" },
+	{ on = [ "g", "u" ],       run = "cd /run/media",             desc = "Go media" },
 	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go config"  },
 	{ on = [ "g", "s" ],       run = "cd ~/Stažené",   desc = "Go downloads" },
 	{ on = [ "g", "o" ],       run = "cd ~/Obrázky",   desc = "Go Obrázky" },
@@ -277,7 +276,6 @@ keymap = [
 	{ on = [ "<Up>" ],   run = "arrow -1", desc = "Move cursor up" },
 	{ on = [ "<Down>" ], run = "arrow 1",  desc = "Move cursor down" },
 
-	{ on = [ "<C-p>" ], run = "arrow -1", desc = "Move cursor up" },
 	{ on = [ "<C-n>" ], run = "arrow 1",  desc = "Move cursor down" },
 
 	{ on = [ "~" ], run = "help", desc = "Open help" }
@@ -319,9 +317,29 @@ run  = "plugin chmod"
 desc = "Chmod on selected files"
 
 [[mgr.prepend_keymap]]
-on = ["c", "a"]
-run = "plugin ouch"
-desc = "Compress archives with ouch"
+on   = [ "c", "a", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "p" ]
+run  = "plugin compress -p"
+desc = "Archive selected files (password)"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "h" ]
+run  = "plugin compress -ph"
+desc = "Archive selected files (password+header)"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "l" ]
+run  = "plugin compress -l"
+desc = "Archive selected files (compression level)"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "u" ]
+run  = "plugin compress -phl"
+desc = "Archive selected files (password+header+level)"
 
 [[mgr.prepend_keymap]]
 on  = "y"
@@ -330,3 +348,7 @@ run = [ '''
 ''', "yank" ]
 desc = "Copy files to system clipboard"
 
+[[mgr.prepend_keymap]]
+on   = [ "<C-p>" ]
+run  = '''shell 'localsend "$@"' --orphan'''
+desc = "Odeslat přes LocalSend"
