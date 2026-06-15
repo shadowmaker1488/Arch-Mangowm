@@ -79,8 +79,8 @@ yay -S adobe-source-han-sans-cn-fonts \
   gdu \
   gparted \
   grimblast-git \
-  grubforge \
   gst-plugins-good \
+  limine-mkinitcpio-hook \
   gvfs \
   htop \
   mangowm \
@@ -121,7 +121,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   rofi-calc-git \
   simple-mtpfs \
   subliminal-git \
-  swaync \
+  hyprlock \
   system-config-printer \
   timeshift \
   tlp \
