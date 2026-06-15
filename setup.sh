@@ -88,7 +88,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   hyprlock \
   hyprpicker \
   imagemagick \
-  kitty \
+  foot \
   libreoffice-still \
   libreoffice-still-cs \
   localsend \
