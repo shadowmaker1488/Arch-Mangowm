@@ -1,16 +1,16 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 51, // Waybar height (to be removed for auto height)
+    "height": 41, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 5, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["ext/workspaces", "dwl/window"],
     "modules-center": ["clock"],
     "modules-right": ["network", "pulseaudio", "backlight","battery", "tray"],
 
     // Modules configuration
-     "hyprland/workspaces": {
+     "ext/workspaces": {
          "disable-scroll": true,
          "all-outputs": true,
          "warp-on-scroll": false,
@@ -32,10 +32,17 @@
         // "icon-size": 21,
         "spacing": 10
     },
+    "dwl/window": {
+    "max-length": 50,
+    "separate-outputs": true,
+  },
+
     "clock": {
         "timezone": "Europe/Prague",
 	"format": "{:%A %e. %B %Y (%H:%M)}",
 	"tooltip": false,
+  "locale": "cs_CZ.UTF-8",
+  "format": "{:L%A %d. %B %Y (%H:%M)}",
 	"on-click": "kitty -e calcurse"
 
     },
@@ -74,7 +81,7 @@
         // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}%  {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": "󰖁 {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
@@ -90,4 +97,13 @@
         "on-click": "kitty -e pulsemixer",
         "on-click-right": "kitty -e bluetui"
     },
+
+  "custom/weather_toggle": {
+    "exec": "~/.config/waybar/scripts/weather-module.sh",
+    "return-type": "json",
+    "interval": 1800,
+    "format": " {}",
+    "on-click": "~/.config/waybar/scripts/weather-module.sh --toggle && pkill -RTMIN+8 waybar",
+    "signal": 8
+},
 }

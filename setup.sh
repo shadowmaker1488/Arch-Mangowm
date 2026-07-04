@@ -33,6 +33,7 @@ fi
 # sed stuff
 sudo sed -i 's/^#Color/Color/' /etc/pacman.conf
 sudo sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+sudo sed -i 's/^#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
 sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
 sudo pacman -Syu --noconfirm
 
@@ -51,6 +52,7 @@ mv ~/.config/icons ~/.icons
 # update file saving location
 
 xdg-user-dirs-update
+
 yay -S adobe-source-han-sans-cn-fonts \
   adobe-source-han-sans-jp-fonts \
   adobe-source-han-sans-kr-fonts \
@@ -64,12 +66,11 @@ yay -S adobe-source-han-sans-cn-fonts \
   calcurse \
   caligula \
   cantarell-fonts \
-  clamtk \
+  clamav \
   clipse \
   clipse-gui \
   cronie \
   cups \
-  deluge \
   downgrade \
   dysk \
   edk2-shell \
@@ -78,27 +79,30 @@ yay -S adobe-source-han-sans-cn-fonts \
   fzf \
   gdu \
   gparted \
-  grimblast-git \
+  grim \
+  slurp \
   gst-plugins-good \
-  limine-mkinitcpio-hook \
   gvfs \
   htop \
-  mangowm \
+  hyprcursor \
   hypridle \
   hyprlock \
   hyprpicker \
+  hyprsunset \
   imagemagick \
-  foot \
+  kitty \
   libreoffice-still \
   libreoffice-still-cs \
+  limine-mkinitcpio-hook \
   localsend \
   lxqt-policykit \
   lynx \
+  mako \
   man-db \
+  mangowm \
   mediainfo \
   mpv \
   mpv-mpris \
-  ncspot \
   neovim \
   newsboat \
   noto-fonts-emoji \
@@ -120,8 +124,8 @@ yay -S adobe-source-han-sans-cn-fonts \
   rofi \
   rofi-calc-git \
   simple-mtpfs \
+  spotatui-bin \
   subliminal-git \
-  hyprlock \
   system-config-printer \
   timeshift \
   tlp \
@@ -144,12 +148,10 @@ yay -S adobe-source-han-sans-cn-fonts \
   wev \
   wf-recorder \
   wl-clipboard \
-  hyprsunset \
   woff2-font-awesome \
   xdg-desktop-portal-gtk \
-  xdg-desktop-portal-hyprland \
+  xdg-desktop-portal-wlr \
   xdg-user-dirs \
-  xidel-bin \
   xorg-xhost \
   yazi \
   ydotool \
@@ -205,7 +207,6 @@ xdg-mime default firefox.desktop x-scheme-handler/http
 
 # složky
 sudo mkdir /mnt/Disk2 && sudo chown $USER:$USER /mnt/Disk2
-sudo mkdir /mnt/phone && sudo chown $USER:$USER /mnt/phone
 
 # Yazi chmod plugin
 ya pack -a yazi-rs/plugins#chmod
@@ -220,7 +221,7 @@ ya pack -a yazi-rs/plugins#mount
 ya pack -a ndtoan96/ouch
 
 # Oh my zsh
-RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUNZSH=no CHSH=yes UNATTENDED=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k

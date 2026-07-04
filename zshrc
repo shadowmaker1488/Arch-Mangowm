@@ -148,11 +148,18 @@ export BROWSER=firefox
 # vim mode
 set -o vi 
 
-# autostart Mangowm 
+# Select system start 
+#if uwsm check may-start && uwsm select; then
+#	exec uwsm start default
+#fi
+
+# Start Mango 
 if uwsm check may-start; then
-    exec uwsm start mango-uwsm.desktop
+    exec uwsm start mango.desktop
 fi
 
 # auto-functions
 
 setopt CORRECT
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
