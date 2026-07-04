@@ -86,7 +86,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   htop \
   hyprcursor \
   hypridle \
-  hyprlock \
+  swaylock-effects \
   hyprpicker \
   hyprsunset \
   imagemagick \
@@ -124,7 +124,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   rofi \
   rofi-calc-git \
   simple-mtpfs \
-  spotatui-bin \
+  ncspot \
   subliminal-git \
   system-config-printer \
   timeshift \
