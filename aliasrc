@@ -10,7 +10,6 @@ alias cat="bat"
 #alias df="df -h -x tmpfs"
 alias f="fzf"
 alias n="nvim"
-alias sn="sudo nvim"
 alias batteryinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 # APPS
@@ -29,15 +28,21 @@ alias record-mic="wf-recorder -a analog-input-internal-mic --geometry 1920x1080 
 
 # CONFIG FILES 
 alias nw="nvim ~/.config/waybar/config"
-alias nvs="nvim /mnt/Disk2/dotfiles/mango/setup.sh"
 alias nva="nvim ~/.config/aliasrc"
 
 # hyprland config files 
 alias hc="nvim ~/.config/hypr/hyprland.lua"
-alias mc="nvim ~/.config/mango/config.conf"
 alias hi="nvim ~/.config/hypr/hypridle.conf"
 alias hl="nvim ~/.config/hypr/hyprlock.conf"
-alias ml="nvim ~/.config/mango/wlsunset.sh"
+alias hs="nvim ~/.config/hypr/hyprsunset.conf"
+alias nvs="nvim /mnt/Disk2/dotfiles/hyprland/setup.sh"
+
+# mangowm 
+alias mc="nvim ~/.config/mango/config.conf"
+alias ms="nvim ~/.config/swaylock/wlsunset.sh"
+alias mi="nvim ~/.config/swaylock/swayidle.sh"
+alias ml="nvim ~/.config/swaylock/config"
+alias nvs="nvim /mnt/Disk2/dotfiles/mango/setup.sh"
 
 
 # COMMANDS
