@@ -80,15 +80,9 @@ yay -S adobe-source-han-sans-cn-fonts \
   gdu \
   gparted \
   grim \
-  slurp \
   gst-plugins-good \
   gvfs \
   htop \
-  hyprcursor \
-  hypridle \
-  swaylock-effects \
-  hyprpicker \
-  hyprsunset \
   imagemagick \
   kitty \
   libreoffice-still \
@@ -103,6 +97,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   mediainfo \
   mpv \
   mpv-mpris \
+  ncspot \
   neovim \
   newsboat \
   noto-fonts-emoji \
@@ -124,8 +119,9 @@ yay -S adobe-source-han-sans-cn-fonts \
   rofi \
   rofi-calc-git \
   simple-mtpfs \
-  ncspot \
+  slurp \
   subliminal-git \
+  swaylock-effects \
   system-config-printer \
   timeshift \
   tlp \
@@ -148,6 +144,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   wev \
   wf-recorder \
   wl-clipboard \
+  wlsunset \
   woff2-font-awesome \
   xdg-desktop-portal-gtk \
   xdg-desktop-portal-wlr \
@@ -162,7 +159,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   zip \
   zoxide \
   zsh --noconfirm
-
 # services
 sudo systemctl enable systemd-boot-update.service
 sudo systemctl enable tlp
