@@ -122,6 +122,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   slurp \
   subliminal-git \
   swaylock-effects \
+  swayidle \
   system-config-printer \
   timeshift \
   tlp \
