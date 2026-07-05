@@ -145,6 +145,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   wf-recorder \
   wl-clipboard \
   wlsunset \
+  wlopm \
   woff2-font-awesome \
   xdg-desktop-portal-gtk \
   xdg-desktop-portal-wlr \
