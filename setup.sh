@@ -125,6 +125,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   swayidle \
   system-config-printer \
   timeshift \
+  telegram-desktop \
   tlp \
   tlpui \
   topgrade \
@@ -152,6 +153,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   xdg-desktop-portal-wlr \
   xdg-user-dirs \
   xorg-xhost \
+  wl-randr \
   yazi \
   ydotool \
   yt-dlp \
