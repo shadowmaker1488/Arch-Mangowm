@@ -164,7 +164,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   zoxide \
   zsh --noconfirm
 # services
-sudo systemctl enable systemd-boot-update.service
 sudo systemctl enable tlp
 sudo systemctl enable ufw
 sudo ufw enable
