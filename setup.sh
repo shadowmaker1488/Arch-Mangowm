@@ -163,6 +163,10 @@ yay -S adobe-source-han-sans-cn-fonts \
   zip \
   zoxide \
   zsh --noconfirm
+
+# omarchy-send
+curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash
+
 # services
 sudo systemctl enable tlp
 sudo systemctl enable ufw
