@@ -350,5 +350,5 @@ desc = "Copy files to system clipboard"
 
 [[mgr.prepend_keymap]]
 on   = [ "<C-p>" ]
-run  = '''shell 'localsend "$@"' --orphan'''
+run  = '''shell 'kitty --class omarchy-tui -e omarchy-send "$@"' --orphan'''
 desc = "Odeslat přes LocalSend"
