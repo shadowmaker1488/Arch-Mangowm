@@ -62,6 +62,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   aerc \
   abook \
   bat \
+  cyrus-sasl-xoauth2-git \
   bluetui \
   breeze \
   brightnessctl \

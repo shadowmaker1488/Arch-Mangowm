@@ -10,7 +10,6 @@ keymap = [
 	{ on = [ "q" ],     run = "quit",               desc = "Exit the process" },
 	{ on = [ "Q" ],     run = "quit --no-cwd-file", desc = "Exit the process without writing cwd-file" },
 	{ on = [ "<C-c>" ], run = "close",              desc = "Close the current tab, or quit if it is last tab" },
-	{ on = [ "<C-z>" ], run = "suspend",            desc = "Suspend the process" },
 
 
 	# Navigation
@@ -352,3 +351,9 @@ desc = "Copy files to system clipboard"
 on   = [ "<C-p>" ]
 run  = '''shell 'kitty --class omarchy-tui -e omarchy-send "$@"' --orphan'''
 desc = "Odeslat přes LocalSend"
+
+[[mgr.prepend_keymap]]
+on   = [ "<C-z>" ]
+run  = '''shell 'zoxide edit' --block --confirm'''
+desc = "Zoxide edit"
+
