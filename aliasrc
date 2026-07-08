@@ -64,4 +64,6 @@ alias cds="cd ~/Stažené"
 alias cdu="cd /run/media/tom"
 alias cdf="cd ~/Filmy2"
 
-
+# abook
+alias abook-osobní="abook --datafile ~/.abook/osobni"
+alias abook-mup="abook --datafile ~/.abook/mup"

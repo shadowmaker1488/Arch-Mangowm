@@ -59,6 +59,8 @@ yay -S adobe-source-han-sans-cn-fonts \
   adwaita-fonts \
   atool \
   awww \
+  aerc \
+  abook \
   bat \
   bluetui \
   breeze \
