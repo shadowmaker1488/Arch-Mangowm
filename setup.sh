@@ -1,6 +1,37 @@
 #!/bin/bash
-set -e # Skript se okamžitě ukončí, pokud jakýkoliv příkaz selže.
-set -x # Terminál vypíše každý příkaz přesně tak, jak ho před spuštěním zkompiluje.
+
+# Vytvoření prázdného pole pro logování chyb
+declare -a ERROR_LOG
+
+# Chytrá funkce pro opakování a logování
+retry() {
+  # Spustí se původní příkaz
+  if "$@"; then
+    return 0
+  else
+    echo -e "\e[33m⚠️ Příkaz selhal. Za 2 sekundy zkusím znovu: $*\e[0m"
+    sleep 2
+    # Druhý pokus
+    if "$@"; then
+      echo -e "\e[32m✅ Druhý pokus byl úspěšný.\e[0m"
+      return 0
+    else
+      echo -e "\e[31m❌ Příkaz selhal i napodruhé. Přeskakuji a zapisuji do logu...\e[0m"
+      ERROR_LOG+=("$*")
+      # Vrátíme 0, čímž Bash oklameme, že je vše OK, aby skript nepadl a jel dál
+      return 0
+    fi
+  fi
+}
+
+# --- AUTOMATICKÉ OBALENÍ PŘÍKAZŮ ---
+# Tyto příkazy se nyní budou automaticky a neviditelně chránit přes 'retry'
+sudo() { retry command sudo "$@"; }
+yay() { retry command yay "$@"; }
+git() { retry command git "$@"; }
+ya() { retry command ya "$@"; }
+sh() { retry command sh "$@"; }
+# -----------------------------------
 
 sudo pacman -S base-devel --noconfirm
 
@@ -49,6 +80,12 @@ mv ~/.config/rofi-power-menu ~/.local/bin
 mv ~/.config/themes ~/.themes
 mv ~/.config/icons ~/.icons
 
+# EFI shell to systemd-boot
+# install programs
+# update file saving location
+
+xdg-user-dirs-update
+
 yay -S adobe-source-han-sans-cn-fonts \
   adobe-source-han-sans-jp-fonts \
   adobe-source-han-sans-kr-fonts \
@@ -56,7 +93,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   atool \
   awww \
   aerc \
-  abook \
   bat \
   cyrus-sasl-xoauth2-git \
   bluetui \
@@ -87,12 +123,11 @@ yay -S adobe-source-han-sans-cn-fonts \
   libreoffice-still \
   libreoffice-still-cs \
   limine-mkinitcpio-hook \
-  localsend \
   lxqt-policykit \
   lynx \
   mako \
   man-db \
-  mangowm \
+  mangowm-git \
   mediainfo \
   mpv \
   mpv-mpris \
@@ -107,7 +142,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   perl-image-exiftool \
   pulsemixer \
   python-ffsubsync \
-  python-ffsubsync-venv \
   python-pipx \
   qimgv-git \
   qt5-wayland \
@@ -164,7 +198,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   zsh --noconfirm
 
 # omarchy-send
-curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash
+sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash"
 
 # services
 sudo systemctl enable tlp
@@ -175,6 +209,33 @@ sudo systemctl enable reflector.timer
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 sudo cp /usr/share/edk2-shell/x64/Shell.efi /boot/shellx64.efi
+
+# Mail automatizace
+#
+
+# 1. Instalace a spuštění samotného démona cronie
+echo "Instaluji a aktivuji cronie..."
+sudo pacman -S --noconfirm cronie
+sudo systemctl enable --now cronie.service
+
+# 2. Definice příkazu (každých 5 minut se stáhne pošta a updatuje index)
+# DŮLEŽITÉ: V cronu je vždy lepší používat absolutní cesty k programům!
+CRON_JOB="*/5 * * * * /usr/bin/mbsync -a && /usr/bin/notmuch new"
+
+# 3. Bezpečný zápis do crontabu
+echo "Nastavuji automatickou synchronizaci e-mailů..."
+
+# Zkontrolujeme, jestli už tato přesná úloha v crontabu náhodou není
+if ! crontab -l 2>/dev/null | grep -qF "$CRON_JOB"; then
+  # Pokud není, vezmeme aktuální crontab, přidáme na konec náš příkaz a uložíme zpět
+  (
+    crontab -l 2>/dev/null
+    echo "$CRON_JOB"
+  ) | crontab -
+  echo "Úloha pro mbsync a notmuch úspěšně přidána."
+else
+  echo "Úloha už v crontabu existuje, přeskakuji."
+fi
 
 # set default xdg
 # Browser xdg
@@ -222,11 +283,27 @@ ya pack -a yazi-rs/plugins#mount
 # yazi ouch archives
 ya pack -a ndtoan96/ouch
 
-# Oh my zsh
-RUNZSH=no CHSH=yes UNATTENDED=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Oh my zsh (tichá instalace se zachováním stávajícího zshrc a bez vyžádání hesla)
+export KEEP_ZSHRC=yes
+export RUNZSH=no
+export CHSH=yes
+export UNATTENDED=yes
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # Syntax highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# --- ZÁVĚREČNÉ SHRNUTÍ CHYB ---
+echo -e "\n=================================================="
+if [ ${#ERROR_LOG[@]} -eq 0 ]; then
+  echo -e "\e[32m🎉 Skript byl kompletně dokončen bez jediného erroru!\e[0m"
+else
+  echo -e "\e[31m⚠️ Skript byl dokončen, ale následující příkazy selhaly:\e[0m"
+  for err in "${ERROR_LOG[@]}"; do
+    echo -e " - \e[33m$err\e[0m"
+  done
+fi
+echo "=================================================="

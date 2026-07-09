@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 5, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["ext/workspaces", "dwl/window"],
+    "modules-left": ["ext/workspaces", "mango/window"],
     "modules-center": ["clock"],
     "modules-right": ["network", "pulseaudio", "backlight","battery", "tray"],
 
@@ -32,7 +32,7 @@
         // "icon-size": 21,
         "spacing": 10
     },
-    "dwl/window": {
+    "mango/window": {
     "max-length": 50,
     "separate-outputs": true,
   },
