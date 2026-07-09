@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e # Skript se okamžitě ukončí, pokud jakýkoliv příkaz selže.
+set -x # Terminál vypíše každý příkaz přesně tak, jak ho před spuštěním zkompiluje.
 
 sudo pacman -S base-devel --noconfirm
 
@@ -46,12 +48,6 @@ mv ~/.config/zshenv ~/.zshenv
 mv ~/.config/rofi-power-menu ~/.local/bin
 mv ~/.config/themes ~/.themes
 mv ~/.config/icons ~/.icons
-
-# EFI shell to systemd-boot
-# install programs
-# update file saving location
-
-xdg-user-dirs-update
 
 yay -S adobe-source-han-sans-cn-fonts \
   adobe-source-han-sans-jp-fonts \
