@@ -26,30 +26,21 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 
 [opener]
 edit = [
-	{ run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-	{ run = 'code "%*"',    orphan = true, desc = "code",         for = "windows" },
-	{ run = 'code -w "%*"', block = true,  desc = "code (block)", for = "windows" },
+	{ run = 'nvim %s', block = true, desc = "neovim", for = "unix" },
 ]
 open = [
-	{ run = 'xdg-open "$@"', orphan = true,                desc = "Open", for = "linux" },
-	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
-	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+	{ run = 'xdg-open %s1', orphan = true, desc = "Open", for = "linux" },
 ]
 reveal = [
-	{ run = 'xdg-open "$(dirname "$0")"',            desc = "Reveal", for = "linux" },
-	{ run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
-	{ run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
-	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+	{ run = 'xdg-open %d1', desc = "Reveal", for = "linux" },
+	{ run = "sh -c 'exiftool \"$1\"; echo \"Press enter to exit\"; read _' -- %s1", block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'case "$1" in *.zip) unzip "$1" ;; *.tar) tar -xf "$1" ;; *.tar.gz|*.tgz) tar -xzf "$1" ;; *.tar.bz2|*.tbz2) tar -xjf "$1" ;; *.tar.xz|*.txz) tar -xJf "$1" ;; *.7z) 7z x "$1" ;; *.rar) unrar x "$1" ;; esac', desc = "Extract here", for = "unix" },
-	{ run = 'case "%1" in *.zip) unzip "%1" ;; *.tar) tar -xf "%1" ;; *.tar.gz|*.tgz) tar -xzf "%1" ;; *.tar.bz2|*.tbz2) tar -xjf "%1" ;; *.tar.xz|*.txz) tar -xJf "%1" ;; *.7z) 7z x "%1" ;; *.rar) unrar x "%1" ;; esac', desc = "Extract here", for = "windows" },
+	{ run = "sh -c 'case \"$1\" in *.zip) unzip \"$1\" ;; *.tar) tar -xf \"$1\" ;; *.tar.gz|*.tgz) tar -xzf \"$1\" ;; *.tar.bz2|*.tbz2) tar -xjf \"$1\" ;; *.tar.xz|*.txz) tar -xJf \"$1\" ;; *.7z) 7z x \"$1\" ;; *.rar) unrar x \"$1\" ;; esac' -- %s1", desc = "Extract here", for = "unix" },
 ]
-
 play = [
-	{ run = 'mpv "$@"', orphan = true, for = "unix" },
-	{ run = 'mpv "%1"', orphan = true, for = "windows" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+	{ run = 'mpv %s', orphan = true, for = "unix" },
+	{ run = "sh -c 'mediainfo \"$1\"; echo \"Press enter to exit\"; read _' -- %s1", block = true, desc = "Show media info", for = "unix" },
 ]
 
 [open]
@@ -61,16 +52,17 @@ rules = [
 	{ mime = "image/*",         use = [ "open", "reveal" ] },
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
 	{ mime = "inode/x-empty",   use = [ "edit", "reveal" ] },
+	{ mime = "inode/empty",     use = [ "edit", "reveal" ] },
 
 	{ mime = "application/*zip", use = [ "extract", "reveal" ] },
 	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
+	{ mime = "application/{tar,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
 
 	{ mime = "application/json", use = [ "edit", "reveal" ] },
 	{ mime = "*/javascript",     use = [ "edit", "reveal" ] },
 
-	{ mime = "*", use = [ "open", "reveal" ] },
+	{ url = "*", use = [ "open", "reveal" ] },
 ]
-
 [tasks]
 micro_workers    = 10
 macro_workers    = 25

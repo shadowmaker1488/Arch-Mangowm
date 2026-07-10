@@ -127,7 +127,8 @@ yay -S adobe-source-han-sans-cn-fonts \
   lynx \
   mako \
   man-db \
-  mangowm-git \
+  mangowm-wlonly-git \
+  wlroots-git \
   mediainfo \
   mpv \
   mpv-mpris \
