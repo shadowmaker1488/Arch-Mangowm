@@ -74,8 +74,7 @@ sudo pacman -Syu --noconfirm
 mkdir -p ~/.local && mkdir ~/.local/bin/
 
 mv ~/.config/Obrázky .
-mv ~/.config/zshrc ~/.zshrc
-mv ~/.config/zshenv ~/.zshenv
+mv ~/.config/bashrc ~/.bashrc
 mv ~/.config/rofi-power-menu ~/.local/bin
 mv ~/.config/themes ~/.themes
 mv ~/.config/icons ~/.icons
@@ -161,6 +160,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   timeshift \
   telegram-desktop \
   tlp \
+  starship \
   tlpui \
   topgrade \
   trashy \
@@ -195,8 +195,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   zathura-cb \
   zathura-pdf-mupdf \
   zip \
-  zoxide \
-  zsh --noconfirm
+  zoxide --noconfirm
 
 # omarchy-send
 sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash"
@@ -283,19 +282,6 @@ ya pack -a yazi-rs/plugins#mount
 
 # yazi ouch archives
 ya pack -a ndtoan96/ouch
-
-# Oh my zsh (tichá instalace se zachováním stávajícího zshrc a bez vyžádání hesla)
-export KEEP_ZSHRC=yes
-export RUNZSH=no
-export CHSH=yes
-export UNATTENDED=yes
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# Powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
-# Syntax highlighting
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # --- ZÁVĚREČNÉ SHRNUTÍ CHYB ---
 echo -e "\n=================================================="
