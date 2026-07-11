@@ -18,5 +18,10 @@ use = "yazi-rs/plugins:mount"
 rev = "8cd50c6"
 hash = "e3260d0b1feded8c8e3ae3afa1169e30"
 
+[[plugin.deps]]
+use = "boydaihungst/restore"
+rev = "0e08704"
+hash = "e4d7c06510b4fe5f64ae31fbb4e017d6"
+
 [flavor]
 deps = []

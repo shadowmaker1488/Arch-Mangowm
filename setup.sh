@@ -71,7 +71,7 @@ sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
 sudo pacman -Syu --noconfirm
 
 # basic files
-mkdir -p ~/.local && mkdir ~/.local/bin/
+mkdir -p ~/.local/bin/
 
 mv ~/.config/Obrázky .
 mv ~/.config/bashrc ~/.bashrc
@@ -83,8 +83,6 @@ mv ~/.config/icons ~/.icons
 # install programs
 # update file saving location
 
-xdg-user-dirs-update
-
 yay -S adobe-source-han-sans-cn-fonts \
   adobe-source-han-sans-jp-fonts \
   adobe-source-han-sans-kr-fonts \
@@ -94,6 +92,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   aerc \
   bat \
   cyrus-sasl-xoauth2-git \
+  bash-completion \
   bluetui \
   breeze \
   brightnessctl \
@@ -126,8 +125,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   lynx \
   mako \
   man-db \
-  mangowm-wlonly-git \
-  wlroots-git \
+  mangowm-git \
   mediainfo \
   mpv \
   mpv-mpris \
@@ -163,7 +161,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   starship \
   tlpui \
   topgrade \
-  trashy \
+  trash-cli \
   tree \
   ttf-jetbrains-mono-nerd \
   ttf-meslo-nerd \
@@ -237,51 +235,23 @@ else
   echo "Úloha už v crontabu existuje, přeskakuji."
 fi
 
-# set default xdg
-# Browser xdg
-# Writer (text)
-xdg-mime default libreoffice-writer.desktop application/vnd.oasis.opendocument.text
-xdg-mime default libreoffice-writer.desktop application/vnd.oasis.opendocument.text-template
-xdg-mime default libreoffice-writer.desktop application/msword
-xdg-mime default libreoffice-writer.desktop application/vnd.openxmlformats-officedocument.wordprocessingml.document
-xdg-mime default libreoffice-writer.desktop application/rtf
-xdg-mime default libreoffice-writer.desktop text/rtf
-
-# Calc (spreadsheets)
-xdg-mime default libreoffice-calc.desktop application/vnd.oasis.opendocument.spreadsheet
-xdg-mime default libreoffice-calc.desktop application/vnd.oasis.opendocument.spreadsheet-template
-xdg-mime default libreoffice-calc.desktop application/vnd.ms-excel
-xdg-mime default libreoffice-calc.desktop application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-
-# Impress (presentations)
-xdg-mime default libreoffice-impress.desktop application/vnd.oasis.opendocument.presentation
-xdg-mime default libreoffice-impress.desktop application/vnd.oasis.opendocument.presentation-template
-xdg-mime default libreoffice-impress.desktop application/vnd.ms-powerpoint
-xdg-mime default libreoffice-impress.desktop application/vnd.openxmlformats-officedocument.presentationml.presentation
-
-# Draw (graphics)
-xdg-mime default libreoffice-draw.desktop application/vnd.oasis.opendocument.graphics
-
-# Math (formula)
-xdg-mime default libreoffice-math.desktop application/vnd.oasis.opendocument.formula
-
-# Browser
-xdg-mime default firefox.desktop x-scheme-handler/http
-
 # složky
-sudo mkdir /mnt/Disk2 && sudo chown $USER:$USER /mnt/Disk2
+sudo mkdir -p /mnt/Disk2 && sudo chown $USER:$USER /mnt/Disk2
 
 # Yazi chmod plugin
-ya pack -a yazi-rs/plugins#chmod
+ya pkg add yazi-rs/plugins:chmod
 
 # Yazi archive plugin
-ya pack -a KKV9/compress
+ya pkg add KKV9/compress
 
 # Yazi mount plugin
-ya pack -a yazi-rs/plugins#mount
+ya pkg add yazi-rs/plugins:mount
 
 # yazi ouch archives
-ya pack -a ndtoan96/ouch
+ya pkg add ndtoan96/ouch
+
+# yazi restore from trash
+ya pkg add boydaihungst/restore
 
 # --- ZÁVĚREČNÉ SHRNUTÍ CHYB ---
 echo -e "\n=================================================="
