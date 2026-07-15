@@ -356,3 +356,8 @@ desc = "Odeslat přes omarchy-send"
 on   = [ "<C-z>" ]
 run  = '''shell 'zoxide edit' --block --confirm'''
 desc = "Zoxide edit"
+
+[[manager.prepend_keymap]]
+on   = [ "C" ]
+run  = "shell '~/.config/yazi/convert-format.sh \"$@\"' --confirm"
+desc = "Převod A/V formátů přes Rofi"

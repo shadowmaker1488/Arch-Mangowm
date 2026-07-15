@@ -125,7 +125,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   lynx \
   mako \
   man-db \
-  mangowm-git \
+  mangowm \
   mediainfo \
   mpv \
   mpv-mpris \
@@ -151,6 +151,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   rofi-calc-git \
   simple-mtpfs \
   slurp \
+  smartmontools \
   subliminal-git \
   swaylock-effects \
   swayidle \
@@ -185,7 +186,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   xdg-desktop-portal-wlr \
   xdg-user-dirs \
   xorg-xhost \
-  wl-randr \
+  wlr-randr \
   yazi \
   ydotool \
   yt-dlp \
@@ -237,21 +238,6 @@ fi
 
 # složky
 sudo mkdir -p /mnt/Disk2 && sudo chown $USER:$USER /mnt/Disk2
-
-# Yazi chmod plugin
-ya pkg add yazi-rs/plugins:chmod
-
-# Yazi archive plugin
-ya pkg add KKV9/compress
-
-# Yazi mount plugin
-ya pkg add yazi-rs/plugins:mount
-
-# yazi ouch archives
-ya pkg add ndtoan96/ouch
-
-# yazi restore from trash
-ya pkg add boydaihungst/restore
 
 # --- ZÁVĚREČNÉ SHRNUTÍ CHYB ---
 echo -e "\n=================================================="

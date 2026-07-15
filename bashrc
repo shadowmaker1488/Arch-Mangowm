@@ -57,7 +57,12 @@ set -o vi
 # zoxide
 eval "$(zoxide init bash)"
 
+# Select wayland session
+#if uwsm check may-start && uwsm select; then
+#	exec uwsm start default
+#fi
 # Start Mango
+
 if uwsm check may-start; then
   exec uwsm start mango.desktop
 fi

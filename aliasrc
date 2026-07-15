@@ -6,6 +6,7 @@ alias df="dysk"
 alias ll="ls -al"
 alias cp="cp -ri"
 alias cat="bat"
+alias h="history | grep"
 
 #alias df="df -h -x tmpfs"
 alias f="fzf"
@@ -64,6 +65,3 @@ alias cds="cd ~/Stažené"
 alias cdu="cd /run/media/tom"
 alias cdf="cd ~/Filmy2"
 
-# abook
-alias abook-osobní="abook --datafile ~/.abook/osobni"
-alias abook-mup="abook --datafile ~/.abook/mup"

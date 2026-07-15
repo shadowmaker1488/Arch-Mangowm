@@ -32,5 +32,7 @@ xdg-mime default nvim.desktop text/plain
 
 # Browser
 xdg-mime default firefox.desktop x-scheme-handler/http
+xdg-mime default firefox.desktop text/html
+xdg-mime default firefox.desktop application/xhtml+xml
 
 notify-send "Asociace přiřazeny."
