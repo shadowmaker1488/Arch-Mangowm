@@ -63,7 +63,8 @@
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "Health: {health}%\nCycles: {cycles}\nPower: {power}W"
     },
     "battery#bat2": {
         "bat": "BAT2"
@@ -98,12 +99,8 @@
         "on-click-right": "kitty -e bluetui"
     },
 
-  "custom/weather_toggle": {
-    "exec": "~/.config/waybar/scripts/weather-module.sh",
-    "return-type": "json",
-    "interval": 1800,
-    "format": " {}",
-    "on-click": "~/.config/waybar/scripts/weather-module.sh --toggle && pkill -RTMIN+8 waybar",
-    "signal": 8
+  "custom/archicon": {
+    "format": "   ",
+    "tooltip": false
 },
 }

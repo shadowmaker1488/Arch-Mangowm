@@ -48,7 +48,7 @@ alias nvs="nvim /mnt/Disk2/dotfiles/mango/setup.sh"
 
 # COMMANDS
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias update-mirrors="sudo reflector --latest 20 --sort rate --download-timeout 30 --save /etc/pacman.d/mirrorlist --verbose"
+alias update-mirrors="sudo cp /etc/pacman.d/mirrorlist /tmp/ && sudo reflector --latest 20 --sort rate --download-timeout 30 --save /etc/pacman.d/mirrorlist --verbose"
 alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S" 
 alias ipaddr="ip -c a"
 alias rn="sudo systemctl restart NetworkManager"

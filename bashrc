@@ -64,7 +64,7 @@ eval "$(zoxide init bash)"
 # Start Mango
 
 if uwsm check may-start; then
-  exec uwsm start mango.desktop
+  uwsm start mango.desktop
 fi
 
 # Expand the history size
