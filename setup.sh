@@ -145,6 +145,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   qt6ct \
   reflector \
   rofi \
+  rofi-emoji \
   rofi-calc-git \
   simple-mtpfs \
   slurp \
