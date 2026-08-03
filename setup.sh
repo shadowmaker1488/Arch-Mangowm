@@ -126,7 +126,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   mediainfo \
   mpv \
   mpv-mpris \
-  ncspot \
+  spotify-player \
   neovim \
   newsboat \
   noto-fonts-emoji \
