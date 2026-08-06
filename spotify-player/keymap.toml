@@ -11,5 +11,6 @@ key_sequence = "."
 command = { SeekBackward = {duration = 5 } }
 key_sequence = ","
 [[keymaps]]
-command = "ShowActionsOnCurrentTrack"
+command = "ShowActionsOnSelectedItem"
 key_sequence = "o"
+

@@ -64,7 +64,7 @@
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""],
-        "tooltip-format": "Health: {health}%\nCycles: {cycles}\nPower: {power}W"
+        "tooltip-format": "Health: {health}%\nCycles: {cycles}\nPower: {power}W\nNabití: {time}"
     },
     "battery#bat2": {
         "bat": "BAT2"

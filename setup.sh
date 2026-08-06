@@ -83,12 +83,11 @@ yay -S adobe-source-han-sans-cn-fonts \
   adobe-source-han-sans-jp-fonts \
   adobe-source-han-sans-kr-fonts \
   adwaita-fonts \
+  aerc \
   atool \
   awww \
-  aerc \
-  bat \
-  cyrus-sasl-xoauth2-git \
   bash-completion \
+  bat \
   bluetui \
   breeze \
   brightnessctl \
@@ -100,6 +99,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   clipse-gui \
   cronie \
   cups \
+  cyrus-sasl-xoauth2-git \
   downgrade \
   dysk \
   edk2-shell \
@@ -126,7 +126,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   mediainfo \
   mpv \
   mpv-mpris \
-  spotify-player \
   neovim \
   newsboat \
   noto-fonts-emoji \
@@ -145,19 +144,20 @@ yay -S adobe-source-han-sans-cn-fonts \
   qt6ct \
   reflector \
   rofi \
+  rofi-calc \
   rofi-emoji \
-  rofi-calc-git \
   simple-mtpfs \
   slurp \
   smartmontools \
-  subliminal-git \
-  swaylock-effects \
-  swayidle \
-  system-config-printer \
-  timeshift \
-  telegram-desktop \
-  tlp \
+  spotify-player \
   starship \
+  subliminal-git \
+  swayidle \
+  swaylock-effects \
+  system-config-printer \
+  telegram-desktop \
+  timeshift \
+  tlp \
   tlpui \
   topgrade \
   trash-cli \
@@ -167,7 +167,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   ttf-ms-win11-auto \
   ttf-roboto \
   udiskie \
-  ufw \
   unrar \
   unzip \
   uwsm \
@@ -177,14 +176,14 @@ yay -S adobe-source-han-sans-cn-fonts \
   wev \
   wf-recorder \
   wl-clipboard \
-  wlsunset \
   wlopm \
+  wlr-randr \
+  wlsunset \
   woff2-font-awesome \
   xdg-desktop-portal-gtk \
   xdg-desktop-portal-wlr \
   xdg-user-dirs \
   xorg-xhost \
-  wlr-randr \
   yazi \
   ydotool \
   yt-dlp \
@@ -199,8 +198,6 @@ sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/i
 
 # services
 sudo systemctl enable tlp
-sudo systemctl enable ufw
-sudo ufw enable
 sudo systemctl enable cronie
 sudo systemctl enable reflector.timer
 sudo systemctl mask systemd-rfkill.service
