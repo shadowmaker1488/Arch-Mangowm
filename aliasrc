@@ -49,9 +49,22 @@ alias nvs="nvim /mnt/Disk2/dotfiles/mango/setup.sh"
 # COMMANDS
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias update-mirrors="sudo cp /etc/pacman.d/mirrorlist /tmp/ && sudo reflector --latest 20 --sort rate --download-timeout 30 --save /etc/pacman.d/mirrorlist --verbose"
-alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S" 
 alias ipaddr="ip -c a"
 alias rn="sudo systemctl restart NetworkManager"
+
+# yayf menu 
+alias yayf="yay -Slq | fzf --multi \
+  --preview 'yay -Si {1}' \
+  --preview-label 'alt-p: toggle description, alt-B/b: toggle PKGBUILD, alt-j/k: scroll, tab: multi-select' \
+  --preview-label-pos 'bottom' \
+  --preview-window 'down:65%:wrap' \
+  --bind 'alt-p:toggle-preview' \
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up' \
+  --bind 'alt-k:preview-up,alt-j:preview-down' \
+  --bind 'alt-b:change-preview:yay -Gp {1} | tail -n +5' \
+  --bind 'alt-B:change-preview:yay -Si {1}' \
+  --color 'pointer:green,marker:green' \
+  | xargs -ro yay -S"
 
 # mount/umount android
 alias mount-android="simple-mtpfs --device 1 /mnt/android"
