@@ -14,4 +14,4 @@ configuration{
     disable-history: false;
 }
 
-@theme "themes/catppuccin"
+@theme "themes/rounded-blue-dark"
