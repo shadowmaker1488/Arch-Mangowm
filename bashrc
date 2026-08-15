@@ -8,19 +8,11 @@
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
-export PATH="$HOME/.local/bin:$PATH"
 
 source ~/.config/aliasrc
 
 # starship prompt
 eval "$(starship init bash)"
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
 
 # extract function
 extract() {
@@ -48,8 +40,6 @@ extract() {
 }
 
 # Created by `pipx` on 2025-01-03 13:17:23
-export PATH="$PATH:/home/tom/.local/bin"
-export BROWSER=firefox
 
 # vim mode
 set -o vi
@@ -59,14 +49,8 @@ eval "$(zoxide init bash)"
 
 # Select wayland session
 #if uwsm check may-start && uwsm select; then
-#	exec uwsm start default
+# exec uwsm start default
 #fi
-# Start Mango
-
-if uwsm check may-start; then
-  uwsm start mango.desktop
-fi
-
 # Expand the history size
 export HISTFILESIZE=10000
 export HISTSIZE=500

@@ -75,7 +75,9 @@ mkdir -p ~/.local/bin/
 
 mv ~/.config/Obrázky .
 mv ~/.config/bashrc ~/.bashrc
+mv ~/.config/bash_profile ~/.bash_profile
 mv ~/.config/rofi-power-menu ~/.local/bin
+mv ~/.config/text-extract.sh ~/.local/bin
 mv ~/.config/themes ~/.themes
 mv ~/.config/icons ~/.icons
 
@@ -112,6 +114,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   gst-plugins-good \
   gvfs \
   htop \
+  tesseract-data-ces \
   hyprpicker \
   imagemagick \
   kitty \
@@ -206,11 +209,6 @@ sudo cp /usr/share/edk2-shell/x64/Shell.efi /boot/shellx64.efi
 
 # Mail automatizace
 #
-
-# 1. Instalace a spuštění samotného démona cronie
-echo "Instaluji a aktivuji cronie..."
-sudo pacman -S --noconfirm cronie
-sudo systemctl enable --now cronie.service
 
 # 2. Definice příkazu (každých 5 minut se stáhne pošta a updatuje index)
 # DŮLEŽITÉ: V cronu je vždy lepší používat absolutní cesty k programům!
