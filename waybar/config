@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["ext/workspaces", "mango/window"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "pulseaudio", "backlight","battery", "tray"],
+    "modules-right": ["network", "pulseaudio", "backlight","battery", "custom/record", "tray"],
 
     // Modules configuration
      "ext/workspaces": {
@@ -99,8 +99,12 @@
         "on-click-right": "kitty -e bluetui"
     },
 
-  "custom/archicon": {
-    "format": "   ",
-    "tooltip": false
+"custom/record": {
+        "exec": "~/.config/rofi/scripts/screen-record.sh --status",
+        "return-type": "json",
+        "interval": 2,
+        "signal": 8,
+        "format": "{}",
+        "on-click": "~/.config/rofi/scripts/screen-record.sh"
+    }
 },
-}

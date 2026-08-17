@@ -105,6 +105,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   downgrade \
   dysk \
   edk2-shell \
+  eza \
   fastfetch \
   firefox \
   fzf \
@@ -151,6 +152,7 @@ yay -S adobe-source-han-sans-cn-fonts \
   rofi-emoji \
   simple-mtpfs \
   slurp \
+  songrec \
   smartmontools \
   spotify-player \
   starship \
@@ -196,9 +198,6 @@ yay -S adobe-source-han-sans-cn-fonts \
   zip \
   zoxide --noconfirm
 
-# omarchy-send
-sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash"
-
 # services
 sudo systemctl enable tlp
 sudo systemctl enable cronie
@@ -206,6 +205,9 @@ sudo systemctl enable reflector.timer
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 sudo cp /usr/share/edk2-shell/x64/Shell.efi /boot/shellx64.efi
+
+# omarchy-send
+sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash"
 
 # Mail automatizace
 #

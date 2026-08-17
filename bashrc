@@ -62,6 +62,8 @@ export HISTCONTROL=erasedups:ignoredups:ignorespace
 # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
 shopt -s checkwinsize
 
+bind 'set colored-stats on'
+
 # bindings
 bind '"\C-l": clear-screen'
 bind '"\e[A": history-search-backward'

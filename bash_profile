@@ -4,12 +4,6 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-# Start Mango
-
-if uwsm check may-start; then
-  uwsm start mango
-fi
-
 export PATH="$HOME/.local/bin:$PATH"
 
 # Preferred editor for local and remote sessions
@@ -20,3 +14,9 @@ else
 fi
 
 export BROWSER=firefox
+
+# Start Mango
+
+if uwsm check may-start; then
+  uwsm start mango
+fi

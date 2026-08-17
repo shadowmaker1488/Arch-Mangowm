@@ -3,7 +3,8 @@
 # BASIC
 alias rm="rm -rfI"
 alias df="dysk"
-alias ll="ls -al"
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias ll="eza -la --icons"
 alias cp="cp -ri"
 alias cat="bat"
 alias h="history | grep"
@@ -20,6 +21,8 @@ alias yt-album="yt-dlp -x --audio-format mp3 --split-chapters --audio-quality 0 
 
 alias calc="rofi -show calc"
 alias y="yazi"
+
+alias sl="songrec listen"
 
 # wf-recorder 
 alias record="wf-recorder -a=alsa_output.pci-0000_00_1f.3.analog-stereo.monitor --geometry 1920x1080 -f"
