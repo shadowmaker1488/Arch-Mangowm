@@ -35,4 +35,7 @@ xdg-mime default firefox.desktop x-scheme-handler/http
 xdg-mime default firefox.desktop text/html
 xdg-mime default firefox.desktop application/xhtml+xml
 
+# Instalace ms fontů
+yay -S ttf-ms-win11-auto --noconfirm
+
 notify-send "Asociace přiřazeny."

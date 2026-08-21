@@ -110,7 +110,6 @@ yay -S --needed --noconfirm \
   noto-fonts-emoji \
   ttf-jetbrains-mono-nerd \
   ttf-meslo-nerd \
-  ttf-ms-win11-auto \
   ttf-roboto \
   woff2-font-awesome
 
@@ -147,7 +146,7 @@ yay -S --needed --noconfirm \
   yazi \
   zoxide
 
-echo -e "\n>>> 5.3 Wayland / Desktop / Hyprland ekosystém"
+echo -e "\n>>> 5.3 Wayland / Desktop / Mango ekosystém"
 yay -S --needed --noconfirm \
   awww \
   grim \
