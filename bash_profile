@@ -15,6 +15,10 @@ fi
 
 export BROWSER=firefox
 
+#if uwsm check may-start && uwsm select; then
+# uwsm start default
+#fi
+
 # Start Mango
 
 if uwsm check may-start; then

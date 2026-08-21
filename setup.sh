@@ -175,6 +175,7 @@ yay -S --needed --noconfirm \
 
 echo -e "\n>>> 5.4 Multimédia"
 yay -S --needed --noconfirm \
+  localsend \
   gst-plugins-good \
   imagemagick \
   mpv \
@@ -246,19 +247,6 @@ sudo systemctl mask systemd-rfkill.socket
 if [[ -f /usr/share/edk2-shell/x64/Shell.efi ]]; then
   sudo cp /usr/share/edk2-shell/x64/Shell.efi /boot/shellx64.efi
 fi
-
-# ============================================================
-# 7. Omarchy-send (bezpečnější varianta)
-# ============================================================
-echo -e "\n>>> 7. Instalace omarchy-send"
-
-# Doporučuji si skript nejdřív stáhnout a prohlédnout:
-# curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh -o /tmp/omarchy-install.sh
-# less /tmp/omarchy-install.sh
-# bash /tmp/omarchy-install.sh
-
-# Pokud chceš automaticky (na vlastní nebezpečí):
-sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash"
 
 # ============================================================
 # 8. Cron pro maily

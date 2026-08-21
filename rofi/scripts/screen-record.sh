@@ -3,11 +3,12 @@
 DIR="$HOME/Videa"
 STATE="/tmp/recording.pid"
 
-# Optimalizované nastavení pro plynulé nahrávání bez záseků a s rozumnou velikostí
+# Optimalizované nastavení: dobrá kvalita + plynulost + menší soubory
+# CRF 23 + veryfast + 30 fps = výrazně menší soubory při stále výborné kvalitě
 VIDEO=(
   -c libx264
-  -p crf=18
-  -p preset=ultrafast
+  -p crf=21
+  -p preset=veryfast
   -p profile=high
   -x yuv420p
   -r 60
@@ -16,7 +17,7 @@ VIDEO=(
 
 AUDIO=(
   -C aac
-  -P b=320k
+  -P b=192k
   -R 48000
 )
 
@@ -71,12 +72,13 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 case "$MODE" in
 "  Pouze mikrofon")
-  FILE="$DIR/zaznam_mikrofon_$TIMESTAMP.wav"
+  FILE="$DIR/zaznam_mikrofon_$TIMESTAMP.mp3"
 
-  pw-record \
-    --rate 48000 \
-    --format s32 \
-    "$FILE" &
+  # Záznam přímo do MP3 ve vysoké kvalitě pomocí ffmpeg
+  ffmpeg \
+    -f pulse -i default \
+    -c:a libmp3lame -b:a 192k \
+    "$FILE" 2>/dev/null &
 
   PID=$!
   ;;
@@ -135,7 +137,7 @@ if ! kill -0 "$PID" 2>/dev/null; then
 
   notify-send -u critical \
     "Nahrávání se nepodařilo spustit" \
-    "wf-recorder se ukončil."
+    "Proces se ukončil."
 
   exit 1
 fi

@@ -78,7 +78,7 @@
 	      "on-click": "kitty -e nmtui",
         "format-disconnected": "Odpojeno ⚠",
     },
-    "pulseaudio": {
+"pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}%  {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
@@ -88,8 +88,8 @@
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "hands-free": "",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
@@ -98,7 +98,6 @@
         "on-click": "kitty -e pulsemixer",
         "on-click-right": "kitty -e bluetui"
     },
-
 "custom/record": {
         "exec": "~/.config/rofi/scripts/screen-record.sh --status",
         "return-type": "json",
@@ -106,5 +105,13 @@
         "signal": 8,
         "format": "{}",
         "on-click": "~/.config/rofi/scripts/screen-record.sh"
-    }
+    },
+
+  "custom/archicon": {
+    "format": "   ",
+    "on-click": "~/.config/rofi/scripts/rofi-powermenu.sh",
+    "tooltip": false
+  }
+
+
 },
