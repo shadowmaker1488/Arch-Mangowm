@@ -1,181 +1,167 @@
 #!/bin/bash
 
-# Vytvoření prázdného pole pro logování chyb
-declare -a ERROR_LOG
+# ============================================================
+# Arch Linux post-install setup (přepsaná a rozdělená verze)
+# ============================================================
 
-# Chytrá funkce pro opakování a logování
+set -euo pipefail # lepší bezpečnost (můžeš vypnout, pokud chceš maximální toleranci)
+
+declare -a ERROR_LOG=()
+
+# --- Retry funkce ---
 retry() {
-  # Spustí se původní příkaz
   if "$@"; then
     return 0
   else
-    echo -e "\e[33m⚠️ Příkaz selhal. Za 2 sekundy zkusím znovu: $*\e[0m"
+    echo -e "\e[33m⚠️  Příkaz selhal. Za 2 s zkusím znovu: $*\e[0m"
     sleep 2
-    # Druhý pokus
     if "$@"; then
-      echo -e "\e[32m✅ Druhý pokus byl úspěšný.\e[0m"
+      echo -e "\e[32m✅ Druhý pokus úspěšný.\e[0m"
       return 0
     else
-      echo -e "\e[31m❌ Příkaz selhal i napodruhé. Přeskakuji a zapisuji do logu...\e[0m"
+      echo -e "\e[31m❌ Selhalo i napodruhé. Zapisuji do logu a pokračuji...\e[0m"
       ERROR_LOG+=("$*")
-      # Vrátíme 0, čímž Bash oklameme, že je vše OK, aby skript nepadl a jel dál
       return 0
     fi
   fi
 }
 
-# --- AUTOMATICKÉ OBALENÍ PŘÍKAZŮ ---
-# Tyto příkazy se nyní budou automaticky a neviditelně chránit přes 'retry'
+# Automatické obalení
 sudo() { retry command sudo "$@"; }
 yay() { retry command yay "$@"; }
 git() { retry command git "$@"; }
-ya() { retry command ya "$@"; }
-sh() { retry command sh "$@"; }
-# -----------------------------------
 
-sudo pacman -S base-devel --noconfirm
+# ============================================================
+# 1. Základní příprava
+# ============================================================
+echo -e "\n>>> 1. Instalace base-devel a yay"
 
-# yay install
-git clone https://aur.archlinux.org/yay.git ~/.config/yay
+sudo pacman -S --needed base-devel --noconfirm
+
+if [[ ! -d ~/.config/yay ]]; then
+  git clone https://aur.archlinux.org/yay.git ~/.config/yay
+fi
 cd ~/.config/yay
 makepkg -si --noconfirm
-cd
+cd ~
 
-# update system
+# ============================================================
+# 2. Systémový update + Chaotic-AUR
+# ============================================================
+echo -e "\n>>> 2. Systémový update a Chaotic-AUR"
+
 sudo pacman -Syu --noconfirm
 
-# chaotic AUR
+if [[ "$(uname -m)" == "x86_64" ]] && [[ -z "${DISABLE_CHAOTIC:-}" ]]; then
+  if ! pacman-key --list-keys 3056513887B78AEB &>/dev/null; then
+    sudo pacman-key --recv-key 3056513887B78AEB
+    sudo pacman-key --lsign-key 3056513887B78AEB
+    sudo pacman -U --noconfirm \
+      'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+      'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+  fi
 
-if [[ "$(uname -m)" == "x86_64" ]] && [ -z "$DISABLE_CHAOTIC" ]; then
-  # Try installing Chaotic-AUR keyring and mirrorlist
-  if ! pacman-key --list-keys 3056513887B78AEB >/dev/null 2>&1 &&
-    sudo pacman-key --recv-key 3056513887B78AEB &&
-    sudo pacman-key --lsign-key 3056513887B78AEB &&
-    sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' &&
-    sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'; then
-
-    # Add Chaotic-AUR repo to pacman config
-    if ! grep -q "chaotic-aur" /etc/pacman.conf; then
-      echo -e '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist' | sudo tee -a /etc/pacman.conf >/dev/null
-    fi
-  else
-    echo -e "Failed to install Chaotic-AUR, so won't include it in pacman config!"
+  if ! grep -q "\[chaotic-aur\]" /etc/pacman.conf; then
+    echo -e '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist' | sudo tee -a /etc/pacman.conf >/dev/null
   fi
 fi
 
-# sed stuff
+# ============================================================
+# 3. Úpravy konfigurace
+# ============================================================
+echo -e "\n>>> 3. Úpravy pacman.conf a bluetooth"
+
 sudo sed -i 's/^#Color/Color/' /etc/pacman.conf
 sudo sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 sudo sed -i 's/^#VerbosePkgLists/VerbosePkgLists/' /etc/pacman.conf
-sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
+
+if [[ -f /etc/bluetooth/main.conf ]]; then
+  sudo sed -i 's/#AutoEnable=true/AutoEnable=false/' /etc/bluetooth/main.conf
+fi
+
 sudo pacman -Syu --noconfirm
 
-# basic files
-mkdir -p ~/.local/bin/
+# ============================================================
+# 4. Přesun konfiguračních souborů (s kontrolou existence)
+# ============================================================
+echo -e "\n>>> 4. Přesun dotfiles"
 
-mv ~/.config/Obrázky .
-mv ~/.config/bashrc ~/.bashrc
-mv ~/.config/bash_profile ~/.bash_profile
-mv ~/.config/rofi-power-menu ~/.local/bin
-mv ~/.config/text-extract.sh ~/.local/bin
-mv ~/.config/themes ~/.themes
-mv ~/.config/icons ~/.icons
+mkdir -p ~/.local/bin ~/.themes ~/.icons
 
-yay -S adobe-source-han-sans-cn-fonts \
+[[ -d ~/.config/Obrázky ]] && mv ~/.config/Obrázky ~
+[[ -f ~/.config/bashrc ]] && mv ~/.config/bashrc ~/.bashrc
+[[ -f ~/.config/bash_profile ]] && mv ~/.config/bash_profile ~/.bash_profile
+[[ -f ~/.config/rofi-power-menu ]] && mv ~/.config/rofi-power-menu ~/.local/bin/
+[[ -f ~/.config/text-extract.sh ]] && mv ~/.config/text-extract.sh ~/.local/bin/
+[[ -d ~/.config/themes ]] && mv ~/.config/themes ~/.themes
+[[ -d ~/.config/icons ]] && mv ~/.config/icons ~/.icons
+
+# ============================================================
+# 5. Instalace balíčků – logické skupiny
+# ============================================================
+
+echo -e "\n>>> 5.1 Fonty"
+yay -S --needed --noconfirm \
+  adobe-source-han-sans-cn-fonts \
   adobe-source-han-sans-jp-fonts \
   adobe-source-han-sans-kr-fonts \
   adwaita-fonts \
-  aerc \
-  atool \
-  awww \
-  bash-completion \
-  bat \
-  bluetui \
-  breeze \
-  brightnessctl \
-  calcurse \
-  caligula \
   cantarell-fonts \
-  clamav \
-  clipse \
-  clipse-gui \
-  cronie \
-  cups \
-  cyrus-sasl-xoauth2-git \
-  downgrade \
-  dysk \
-  edk2-shell \
-  eza \
-  fastfetch \
-  firefox \
-  fzf \
-  gdu \
-  gparted \
-  grim \
-  gst-plugins-good \
-  gvfs \
-  htop \
-  tesseract-data-ces \
-  hyprpicker \
-  imagemagick \
-  kitty \
-  libreoffice-still \
-  libreoffice-still-cs \
-  limine-mkinitcpio-hook \
-  lxqt-policykit \
-  lynx \
-  mako \
-  man-db \
-  mangowm \
-  mediainfo \
-  mpv \
-  mpv-mpris \
-  neovim \
-  newsboat \
   noto-fonts-emoji \
-  ntfs-3g \
-  nwg-look \
-  ouch \
-  paccache-hook \
-  perl-image-exiftool \
-  pulsemixer \
-  python-ffsubsync \
-  python-pipx \
-  qimgv-git \
-  qt5-wayland \
-  qt5ct \
-  qt6-wayland \
-  qt6ct \
-  reflector \
-  rofi \
-  rofi-calc \
-  rofi-emoji \
-  simple-mtpfs \
-  slurp \
-  songrec \
-  smartmontools \
-  spotify-player \
-  starship \
-  subliminal-git \
-  swayidle \
-  swaylock-effects \
-  system-config-printer \
-  telegram-desktop \
-  timeshift \
-  tlp \
-  tlpui \
-  topgrade \
-  trash-cli \
-  tree \
   ttf-jetbrains-mono-nerd \
   ttf-meslo-nerd \
   ttf-ms-win11-auto \
   ttf-roboto \
-  udiskie \
-  unrar \
-  unzip \
-  uwsm \
-  veracrypt \
+  woff2-font-awesome
+
+echo -e "\n>>> 5.2 CLI nástroje a utility"
+yay -S --needed --noconfirm \
+  aerc \
+  atool \
+  bash-completion \
+  bat \
+  bluetui \
+  brightnessctl \
+  calcurse \
+  caligula \
+  clipse \
+  clipse-gui \
+  cronie \
+  dysk \
+  eza \
+  fastfetch \
+  fzf \
+  gdu \
+  htop \
+  lynx \
+  man-db \
+  mediainfo \
+  newsboat \
+  ouch \
+  perl-image-exiftool \
+  pulsemixer \
+  starship \
+  topgrade \
+  trash-cli \
+  tree \
+  yazi \
+  zoxide
+
+echo -e "\n>>> 5.3 Wayland / Desktop / Hyprland ekosystém"
+yay -S --needed --noconfirm \
+  awww \
+  grim \
+  hyprpicker \
+  kitty \
+  mako \
+  mangowm \
+  nwg-look \
+  rofi \
+  rofi-calc \
+  rofi-emoji \
+  slurp \
+  swayidle \
+  swaylock-effects \
   waybar \
   waypaper-git \
   wev \
@@ -184,64 +170,131 @@ yay -S adobe-source-han-sans-cn-fonts \
   wlopm \
   wlr-randr \
   wlsunset \
-  woff2-font-awesome \
   xdg-desktop-portal-gtk \
   xdg-desktop-portal-wlr \
-  xdg-user-dirs \
-  xorg-xhost \
-  yazi \
-  ydotool \
+  ydotool
+
+echo -e "\n>>> 5.4 Multimédia"
+yay -S --needed --noconfirm \
+  gst-plugins-good \
+  imagemagick \
+  mpv \
+  mpv-mpris \
+  python-ffsubsync \
+  qimgv-git \
+  songrec \
+  subliminal-git \
   yt-dlp \
   zathura \
   zathura-cb \
-  zathura-pdf-mupdf \
-  zip \
-  zoxide --noconfirm
+  zathura-pdf-mupdf
 
-# services
+echo -e "\n>>> 5.5 Kancelář a komunikace"
+yay -S --needed --noconfirm \
+  firefox \
+  libreoffice-still \
+  libreoffice-still-cs \
+  telegram-desktop \
+  spotify-player
+
+echo -e "\n>>> 5.6 Systémové nástroje a hardware"
+yay -S --needed --noconfirm \
+  clamav \
+  cups \
+  cyrus-sasl-xoauth2-git \
+  downgrade \
+  edk2-shell \
+  gparted \
+  gvfs \
+  limine-mkinitcpio-hook \
+  lxqt-policykit \
+  ntfs-3g \
+  paccache-hook \
+  python-pipx \
+  qt5-wayland \
+  qt5ct \
+  qt6-wayland \
+  qt6ct \
+  reflector \
+  simple-mtpfs \
+  smartmontools \
+  system-config-printer \
+  timeshift \
+  tlp \
+  tlpui \
+  udiskie \
+  unrar \
+  unzip \
+  uwsm \
+  veracrypt \
+  xdg-user-dirs \
+  xorg-xhost \
+  zip \
+  neovim \
+  tesseract-data-ces
+
+# ============================================================
+# 6. Služby a systémové nastavení
+# ============================================================
+echo -e "\n>>> 6. Povolení služeb"
+
 sudo systemctl enable tlp
 sudo systemctl enable cronie
 sudo systemctl enable reflector.timer
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
-sudo cp /usr/share/edk2-shell/x64/Shell.efi /boot/shellx64.efi
 
-# omarchy-send
+if [[ -f /usr/share/edk2-shell/x64/Shell.efi ]]; then
+  sudo cp /usr/share/edk2-shell/x64/Shell.efi /boot/shellx64.efi
+fi
+
+# ============================================================
+# 7. Omarchy-send (bezpečnější varianta)
+# ============================================================
+echo -e "\n>>> 7. Instalace omarchy-send"
+
+# Doporučuji si skript nejdřív stáhnout a prohlédnout:
+# curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh -o /tmp/omarchy-install.sh
+# less /tmp/omarchy-install.sh
+# bash /tmp/omarchy-install.sh
+
+# Pokud chceš automaticky (na vlastní nebezpečí):
 sh -c "curl -fsSL https://raw.githubusercontent.com/28allday/omarchy-send/main/install.sh | bash"
 
-# Mail automatizace
-#
+# ============================================================
+# 8. Cron pro maily
+# ============================================================
+echo -e "\n>>> 8. Nastavení cron úlohy pro mbsync + notmuch"
 
-# 2. Definice příkazu (každých 5 minut se stáhne pošta a updatuje index)
-# DŮLEŽITÉ: V cronu je vždy lepší používat absolutní cesty k programům!
 CRON_JOB="*/5 * * * * /usr/bin/mbsync -a && /usr/bin/notmuch new"
 
-# 3. Bezpečný zápis do crontabu
-echo "Nastavuji automatickou synchronizaci e-mailů..."
-
-# Zkontrolujeme, jestli už tato přesná úloha v crontabu náhodou není
 if ! crontab -l 2>/dev/null | grep -qF "$CRON_JOB"; then
-  # Pokud není, vezmeme aktuální crontab, přidáme na konec náš příkaz a uložíme zpět
   (
     crontab -l 2>/dev/null
     echo "$CRON_JOB"
   ) | crontab -
-  echo "Úloha pro mbsync a notmuch úspěšně přidána."
+  echo "Úloha přidána."
 else
-  echo "Úloha už v crontabu existuje, přeskakuji."
+  echo "Úloha už existuje, přeskakuji."
 fi
 
-# složky
-sudo mkdir -p /mnt/Disk2 && sudo chown $USER:$USER /mnt/Disk2
+# ============================================================
+# 9. Další složky
+# ============================================================
+echo -e "\n>>> 9. Vytvoření /mnt/Disk2"
+sudo mkdir -p /mnt/Disk2
+sudo chown "$USER:$USER" /mnt/Disk2
 
-# --- ZÁVĚREČNÉ SHRNUTÍ CHYB ---
+# ============================================================
+# Závěrečné shrnutí
+# ============================================================
 echo -e "\n=================================================="
-if [ ${#ERROR_LOG[@]} -eq 0 ]; then
-  echo -e "\e[32m🎉 Skript byl kompletně dokončen bez jediného erroru!\e[0m"
+if [[ ${#ERROR_LOG[@]} -eq 0 ]]; then
+  echo -e "\e[32m🎉 Skript dokončen bez chyb!\e[0m"
 else
-  echo -e "\e[31m⚠️ Skript byl dokončen, ale následující příkazy selhaly:\e[0m"
+  echo -e "\e[31m⚠️  Skript dokončen, ale tyto příkazy selhaly:\e[0m"
   for err in "${ERROR_LOG[@]}"; do
-    echo -e " - \e[33m$err\e[0m"
+    echo -e "  - \e[33m$err\e[0m"
   done
 fi
 echo "=================================================="
