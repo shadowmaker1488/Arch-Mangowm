@@ -15,9 +15,9 @@ alias n="nvim"
 alias batteryinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT1"
 
 # APPS
-alias yt="yt-dlp -f bestaudio+bestvideo --remux-video mp4"
-alias yta="yt-dlp -x --audio-format mp3 --write-thumbnail --convert-thumbnails jpg"
-alias yt-album="yt-dlp -x --audio-format mp3 --split-chapters --audio-quality 0 --write-thumbnail --convert-thumbnails jpg"
+alias yt='yt-dlp -f bestaudio+bestvideo --remux-video mp4 -o "%(title)s.%(ext)s"'
+alias yta='yt-dlp -x --audio-format mp3 --write-thumbnail --convert-thumbnails jpg -o "%(title)s.%(ext)s"'
+alias yt-album='yt-dlp -x --audio-format mp3 --split-chapters --audio-quality 0 --write-thumbnail --convert-thumbnails jpg -o "%(title)s.%(ext)s" -o "chapter:%(title)s/%(section_number)02d - %(section_title)s.%(ext)s" -o "thumbnail:%(title)s/cover.%(ext)s" --exec "rm {}"'
 
 alias calc="rofi -show calc"
 alias y="yazi"
@@ -55,7 +55,7 @@ alias update-mirrors="sudo cp /etc/pacman.d/mirrorlist /tmp/ && sudo reflector -
 alias ipaddr="ip -c a"
 alias rn="sudo systemctl restart NetworkManager"
 
-# yayf menu 
+# yay menu 
 alias yayf="yay -Slq | fzf --multi \
   --preview 'yay -Si {1}' \
   --preview-label 'alt-p: toggle description, alt-B/b: toggle PKGBUILD, alt-j/k: scroll, tab: multi-select' \
@@ -68,6 +68,19 @@ alias yayf="yay -Slq | fzf --multi \
   --bind 'alt-B:change-preview:yay -Si {1}' \
   --color 'pointer:green,marker:green' \
   | xargs -ro yay -S"
+
+alias yayr="yay -Qq | fzf --multi \
+  --preview 'yay -Qi {1}' \
+  --preview-label 'alt-p: toggle info, alt-B/b: toggle files, alt-j/k: scroll, tab: multi-select' \
+  --preview-label-pos 'bottom' \
+  --preview-window 'down:65%:wrap' \
+  --bind 'alt-p:toggle-preview' \
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up' \
+  --bind 'alt-k:preview-up,alt-j:preview-down' \
+  --bind 'alt-b:change-preview:yay -Ql {1}' \
+  --bind 'alt-B:change-preview:yay -Qi {1}' \
+  --color 'pointer:red,marker:red' \
+  | xargs -ro yay -Rsn"
 
 # mount/umount android
 alias mount-android="simple-mtpfs --device 1 /mnt/android"

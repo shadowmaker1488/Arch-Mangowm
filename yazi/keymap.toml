@@ -348,16 +348,16 @@ run = [ '''
 desc = "Copy files to system clipboard"
 
 [[mgr.prepend_keymap]]
-on   = [ "<C-p>" ]
-run  = '''shell 'kitty --class omarchy-tui -- omarchy-send %s' --confirm'''
-desc = "Odeslat přes omarchy-send"
-
-[[mgr.prepend_keymap]]
 on   = [ "<C-z>" ]
 run  = '''shell 'zoxide edit' --block --confirm'''
 desc = "Zoxide edit"
 
+[[mgr.prepend_keymap]]
+on   = [ "<C-p>" ]
+run  = '''shell 'localsend %s' --orphan --confirm'''
+desc = "Odeslat přes LocalSend"
+
 [[manager.prepend_keymap]]
-on   = [ "C" ]
-run  = "shell '~/.config/yazi/convert-format.sh \"$@\"' --confirm"
-desc = "Převod A/V formátů přes Rofi"
+on   = [ "<C-f>" ]
+run  = '''shell 'soubor=$(FZF_DEFAULT_COMMAND="rga --files-with-matches ''" fzf --disabled --bind "change:reload:rga --files-with-matches {q} || true" --prompt "Obsah PDF/DOCX> ") && [ -n "$soubor" ] && ya emit reveal "$soubor"' --block --confirm'''
+desc = "Hledat slovo uvnitř PDF a DOCX dokumentů"
