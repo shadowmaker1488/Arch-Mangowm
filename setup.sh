@@ -90,9 +90,9 @@ mkdir -p ~/.local/bin ~/.themes ~/.icons
 
 [[ -d ~/.config/Obrázky ]] && mv ~/.config/Obrázky ~
 [[ -f ~/.config/bashrc ]] && mv ~/.config/bashrc ~/.bashrc
+[[ -f ~/.config/printscreen.sh ]] && mv ~/.config/printscreen.sh ~/.local/bin/
 [[ -f ~/.config/bash_profile ]] && mv ~/.config/bash_profile ~/.bash_profile
 [[ -f ~/.config/rofi-power-menu ]] && mv ~/.config/rofi-power-menu ~/.local/bin/
-[[ -f ~/.config/text-extract.sh ]] && mv ~/.config/text-extract.sh ~/.local/bin/
 [[ -d ~/.config/themes ]] && mv ~/.config/themes ~/.themes
 [[ -d ~/.config/icons ]] && mv ~/.config/icons ~/.icons
 
@@ -144,6 +144,7 @@ yay -S --needed --noconfirm \
   trash-cli \
   tree \
   yazi \
+  zbar \
   zoxide
 
 echo -e "\n>>> 5.3 Wayland / Desktop / Mango ekosystém"
@@ -231,7 +232,8 @@ yay -S --needed --noconfirm \
   xorg-xhost \
   zip \
   neovim \
-  tesseract-data-ces
+  tesseract-data-ces \
+  tesseract-data-eng
 
 # ============================================================
 # 6. Služby a systémové nastavení
