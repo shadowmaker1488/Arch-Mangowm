@@ -1,0 +1,146 @@
+/**
+ * Dark Teal theme for Rofi
+ * Black background + muted teal selection (from screenshot)
+ * + mode labels (Aplikace, Window, …) like dark-orange
+ */
+
+* {
+    font: "Roboto 14";
+
+    background-color:   transparent;
+    text-color:         @fg0;
+
+    margin:     0px;
+    padding:    0px;
+    spacing:    0px;
+}
+
+window {
+    location:       north;
+    y-offset:       calc(50% - 200px);
+    width:          520px;
+    border-radius:  16px;
+
+    background-color:   @bg0;
+}
+
+mainbox {
+    padding:    12px;
+    spacing:    8px;
+    children:   [ inputbar, message, listview, mode-switcher ];
+}
+
+/* === Search bar === */
+inputbar {
+    background-color:   @bg1;
+    border-color:       @bg3;           /* teal border */
+
+    border:         2px;
+    border-radius:  12px;
+
+    padding:    8px 16px;
+    spacing:    8px;
+    children:   [ prompt, entry ];
+}
+
+prompt {
+    text-color: @fg2;
+}
+
+
+/* === Message (optional) === */
+message {
+    margin:             8px 0 0;
+    border-radius:      12px;
+    background-color:   @bg2;
+}
+
+textbox {
+    padding:    8px 16px;
+    text-color: @fg0;
+}
+
+/* === List === */
+listview {
+    background-color:   transparent;
+    margin:             8px 0 0;
+    lines:              10;
+    columns:            1;
+    fixed-height:       false;
+    dynamic:            true;
+    scrollbar:          true;
+    spacing:            4px;
+}
+
+scrollbar {
+    width:          4px;
+    handle-color:   @bg3;
+    background-color: transparent;
+}
+
+element {
+    padding:        8px 14px;
+    spacing:        10px;
+    border-radius:  10px;
+    orientation:    horizontal;
+    children:       [ element-icon, element-text ];
+}
+
+element normal active {
+    text-color: @bg3;
+}
+
+element alternate active {
+    text-color: @bg3;
+}
+
+/* Selected item – teal highlight */
+element selected normal,
+element selected active {
+    background-color:   @bg3;
+    text-color:         @fg1;
+}
+
+element-icon {
+    size:           1.2em;
+    vertical-align: 0.5;
+    background-color: transparent;
+}
+
+element-text {
+    text-color:     inherit;
+    vertical-align: 0.5;
+}
+
+/* === Mode switcher (Aplikace, Window, Network, …) === */
+mode-switcher {
+    enabled:            true;
+    spacing:            8px;
+    margin:             10px 0 0;
+    background-color:   transparent;
+}
+
+button {
+    padding:            8px 14px;
+    border-radius:      10px;
+    background-color:   @bg1;
+    text-color:         @fg2;
+    cursor:             pointer;
+}
+
+button selected {
+    background-color:   @bg3;
+    text-color:         @fg1;
+}
+
+/* ========== COLORS ========== */
+* {
+    bg0:    #0a0a0aF2;      /* almost black, slightly transparent */
+    bg1:    #161616;        /* search bar / button background */
+    bg2:    #22222280;      /* message background */
+    bg3:    #6ea8a8;        /* teal – selected / accent (from screenshot) */
+    fg0:    #E6E6E6;        /* main text */
+    fg1:    #000000;        /* selected text (dark on teal) */
+    fg2:    #888888;        /* dim / placeholder / inactive mode */
+    fg3:    #3D3D3D;
+}

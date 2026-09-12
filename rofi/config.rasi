@@ -14,4 +14,4 @@ configuration{
     disable-history: false;
 }
 
-@theme "themes/rounded-dark"
+@theme "themes/dark-orange"

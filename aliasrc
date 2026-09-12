@@ -56,31 +56,37 @@ alias ipaddr="ip -c a"
 alias rn="sudo systemctl restart NetworkManager"
 
 # yay menu 
-alias yayf="yay -Slq | fzf --multi \
-  --preview 'yay -Si {1}' \
-  --preview-label 'alt-p: toggle description, alt-B/b: toggle PKGBUILD, alt-j/k: scroll, tab: multi-select' \
-  --preview-label-pos 'bottom' \
-  --preview-window 'down:65%:wrap' \
-  --bind 'alt-p:toggle-preview' \
-  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up' \
-  --bind 'alt-k:preview-up,alt-j:preview-down' \
-  --bind 'alt-b:change-preview:yay -Gp {1} | tail -n +5' \
-  --bind 'alt-B:change-preview:yay -Si {1}' \
-  --color 'pointer:green,marker:green' \
-  | xargs -ro yay -S"
+yayf() {
+    yay -Slq | fzf --multi \
+        --color 'pointer:green,marker:green' \
+        --preview-window 'down:65%:wrap' \
+        --preview-label 'alt-p: toggle menu, alt-B/b: toggle info, alt-s: stáhnout PKBUILD, alt-j/k: scroll, tab: výběr' \
+        --preview-label-pos 'bottom' \
+        --preview 'yay -Si {1}' \
+        --bind 'alt-p:toggle-preview' \
+        --bind 'alt-k:preview-up,alt-j:preview-down' \
+        --bind 'alt-u:preview-half-page-up,alt-d:preview-half-page-down' \
+        --bind 'alt-B:change-preview:yay -Si {1}' \
+        --bind 'alt-b:change-preview:yay -Gp {1} | tail -n +5' \
+        --bind 'alt-s:execute-silent(mkdir -p ~/Stažené && cd ~/Stažené && yay -G {+})' \
+        | xargs -ro yay -S
+}
 
-alias yayr="yay -Qq | fzf --multi \
-  --preview 'yay -Qi {1}' \
-  --preview-label 'alt-p: toggle info, alt-B/b: toggle files, alt-j/k: scroll, tab: multi-select' \
-  --preview-label-pos 'bottom' \
-  --preview-window 'down:65%:wrap' \
-  --bind 'alt-p:toggle-preview' \
-  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up' \
-  --bind 'alt-k:preview-up,alt-j:preview-down' \
-  --bind 'alt-b:change-preview:yay -Ql {1}' \
-  --bind 'alt-B:change-preview:yay -Qi {1}' \
-  --color 'pointer:red,marker:red' \
-  | xargs -ro yay -Rsn"
+yayr() {
+    yay -Qq | fzf --multi \
+        --color 'pointer:red,marker:red' \
+        --preview-window 'down:65%:wrap' \
+        --preview-label 'alt-p: toggle menu, alt-B/b: toggle info, alt-s: stáhnout PKBUILD, alt-j/k: scroll, tab: výběr' \
+        --preview-label-pos 'bottom' \
+        --preview 'yay -Qi {1}' \
+        --bind 'alt-p:toggle-preview' \
+        --bind 'alt-k:preview-up,alt-j:preview-down' \
+        --bind 'alt-u:preview-half-page-up,alt-d:preview-half-page-down' \
+        --bind 'alt-B:change-preview:yay -Qi {1}' \
+        --bind 'alt-b:change-preview:yay -Ql {1}' \
+        --bind 'alt-s:execute-silent(mkdir -p ~/Stažené && cd ~/Stažené && yay -G {+})' \
+        | xargs -ro yay -Rsn
+}
 
 # mount/umount android
 alias mount-android="simple-mtpfs --device 1 /mnt/android"
