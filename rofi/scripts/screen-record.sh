@@ -84,7 +84,7 @@ case "$MODE" in
   ;;
 
 "  Pouze obrazovka")
-  FILE="$DIR/zaznam_obraz_$TIMESTAMP.mkv"
+  FILE="$DIR/zaznam_obraz_$TIMESTAMP.mp4"
 
   wf-recorder \
     "${VIDEO[@]}" \
@@ -94,7 +94,7 @@ case "$MODE" in
   ;;
 
 "  Mikrofon + Obrazovka")
-  FILE="$DIR/zaznam_obraz_zvuk_$TIMESTAMP.mkv"
+  FILE="$DIR/zaznam_obraz_zvuk_$TIMESTAMP.mp4"
 
   wf-recorder \
     "${VIDEO[@]}" \
@@ -106,7 +106,7 @@ case "$MODE" in
   ;;
 
 "  Mikrofon + Obrazovka + Kamera")
-  FILE="$DIR/zaznam_komplet_$TIMESTAMP.mkv"
+  FILE="$DIR/zaznam_komplet_$TIMESTAMP.mp4"
 
   mpv \
     --no-config \
