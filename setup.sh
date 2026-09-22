@@ -131,6 +131,7 @@ yay -S --needed --noconfirm \
   fastfetch \
   fzf \
   gdu \
+  handlr-regex \
   htop \
   lynx \
   man-db \
@@ -139,6 +140,7 @@ yay -S --needed --noconfirm \
   ouch \
   perl-image-exiftool \
   pulsemixer \
+  ripgrep-all \
   starship \
   topgrade \
   trash-cli \
