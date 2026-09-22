@@ -139,6 +139,7 @@ yay -S --needed --noconfirm \
   ouch \
   perl-image-exiftool \
   pulsemixer \
+  ripgrep-all \
   starship \
   topgrade \
   trash-cli \

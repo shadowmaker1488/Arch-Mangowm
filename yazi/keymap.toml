@@ -76,14 +76,15 @@ keymap = [
 	{ on = [ "D" ],         run = "remove --permanently",       desc = "Permanently delete the files" },
 	{ on = [ "m" ],         run = "create",                     desc = "Create a file or directory (ends with / for directories)" },
 	{ on = [ "a" ],         run = "rename --cursor=before_ext", desc = "Rename a file or directory" },
-	{ on = [ "S" ],         run = "shell --interactive",                      desc = "Run a shell command" },
-	{ on = [ ";" ],         run = "shell --block --interactive",              desc = "Run a shell command (block the UI until the command finishes)" },
-	{ on = [ "<Backspace>" ],         run = "hidden toggle",              desc = "Toggle the visibility of hidden files" },
+	{ on = [ "S" ],         run = "shell --interactive",        desc = "Run a shell command" },
+  { on = "s",             run = "search --via=rga",            desc = "Search files by content via ripgrep" },
+	{ on = [ ";" ],         run = "shell --block --interactive", desc = "Run a shell command (block the UI until the command finishes)" },
+	{ on = [ "<Backspace>" ],         run = "hidden toggle",     desc = "Toggle the visibility of hidden files" },
 	{ on = [ "s" ],         run = "search fd",                  desc = "Search files by name using fd" },
 	{ on = [ "<C-s>" ],     run = "search none",                desc = "Cancel the ongoing search" },
 	{ on = [ "z" ],         run = "plugin zoxide",              desc = "Jump to a directory using zoxide" },
 	{ on = [ "Z" ],         run = "plugin fzf",                 desc = "Jump to a directory, or reveal a file using fzf" },
-	{ on = [ "<C-m>" ],         run = "plugin mount",                 desc = "Mount devices" },
+	{ on = [ "<C-m>" ],         run = "plugin mount",           desc = "Mount devices" },
 
 	# Copy
 	{ on = [ "c", "c" ], run = "copy path",             desc = "Copy the absolute path" },
@@ -310,6 +311,7 @@ on   = [ "l" ]
 run  = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
 
+
 [[mgr.prepend_keymap]]
 on   = [ "c", "m" ]
 run  = "plugin chmod"
@@ -357,7 +359,4 @@ on   = [ "<C-p>" ]
 run  = '''shell 'localsend %s' --orphan --confirm'''
 desc = "Odeslat přes LocalSend"
 
-[[manager.prepend_keymap]]
-on   = [ "<C-f>" ]
-run  = '''shell 'soubor=$(FZF_DEFAULT_COMMAND="rga --files-with-matches ''" fzf --disabled --bind "change:reload:rga --files-with-matches {q} || true" --prompt "Obsah PDF/DOCX> ") && [ -n "$soubor" ] && ya emit reveal "$soubor"' --block --confirm'''
-desc = "Hledat slovo uvnitř PDF a DOCX dokumentů"
+
