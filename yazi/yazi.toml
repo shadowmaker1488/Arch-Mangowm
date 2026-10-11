@@ -32,7 +32,7 @@ open = [
 	{ run = 'xdg-open %s1', orphan = true, desc = "Open", for = "linux" },
 ]
 reveal = [
-	{ run = 'xdg-open %d1', desc = "Reveal", for = "linux" },
+	{ run = 'kitty --directory "%d1"', orphan = true, desc = "Reveal", for = "linux" },
 	{ run = "sh -c 'exiftool \"$1\"; echo \"Press enter to exit\"; read _' -- %s1", block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [

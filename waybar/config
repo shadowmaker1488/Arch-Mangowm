@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 5, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["ext/workspaces", "mango/window"],
+    "modules-left": ["ext/workspaces"],
     "modules-center": ["clock"],
     "modules-right": ["network", "pulseaudio", "backlight","battery", "custom/record", "tray"],
 
@@ -13,6 +13,7 @@
      "ext/workspaces": {
          "disable-scroll": true,
          "all-outputs": true,
+         "on-click": "activate",
          "warp-on-scroll": false,
          "format": "{icon}",
          "format-icons": {
